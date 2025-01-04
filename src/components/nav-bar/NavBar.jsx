@@ -22,7 +22,7 @@ function NavBar() {
                                 <input
                                     type="text"
                                     placeholder="India"
-                                    className="w-full pl-8 pr-4 py-2 border-2 rounded-sm focus:outline-none  focus:border-green-400"
+                                    className="w-full pl-8 pr-4 py-2 border-2 rounded-sm focus:outline-none  focus:border-green-400 border-custom-green"
                                 />
                                 <i className="fas fa-search absolute left-2 top-3 text-gray-400" />
                                 <i className="fas fa-chevron-down absolute right-2 top-3 text-gray-400" />
@@ -31,7 +31,7 @@ function NavBar() {
                                 <input
                                     type="text"
                                     placeholder="Find Cars, Mobile Phones and more..."
-                                    className="w-full pl-4 pr-12 py-2 border-2 rounded-l-sm focus:outline-none focus:border-green-400"
+                                    className="w-full pl-4 pr-12 py-2 border-2 rounded-l-sm focus:outline-none focus:border-green-400 border-custom-green"
                                 />
                                 <button className="bg-custom-green text-white px-4 rounded-r hover:bg-gray-800">
                                     <FaSearch />
@@ -40,7 +40,7 @@ function NavBar() {
                         </div>
 
                         <div className="flex items-center space-x-4">
-                            <button onClick={()=>setLoginModal(!loginModal)} className=" underline md:block text-md font-bold hover:text-green-400">
+                            <button onClick={()=>setLoginModal(!loginModal)} className=" underline md:block text-md font-bold hover:text-green-400 transition duration-200 ease-in-out">
                                 Login
                             </button>
                             <button className="bg-white px-4 py-2 rounded-full border-2 border-black hover:bg-gray-50 flex items-center font-semibold shadow-slate-500 shadow-md">
@@ -70,14 +70,14 @@ function NavBar() {
                     <input
                         type="text"
                         placeholder="Find Cars, Mobile Phones and more..."
-                        className="w-full pl-8 pr-12 py-2 border-2 rounded-sm focus:outline-none focus:border-green-400"
+                        className="w-full pl-8 pr-12 py-2 border-2 rounded-sm focus:outline-none focus:border-green-400 border-custom-green"
                     />
                     <FaSearch className="absolute right-4 top-1/2 transform -translate-y-1/2 text-gray-600" />
                 </div>
 
             </div>
-            
-            {loginModal & <LoginModal/>}
+
+            {loginModal && <LoginModal/>}
             
         </>
     )

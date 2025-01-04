@@ -64,11 +64,11 @@ function Footer() {
         {/* Logo Section */}
         <div className="flex flex-wrap items-center justify-center space-x-4 md:space-x-6">
             <img src={footer1} alt="Logo 1" className="h-12 w-auto" />
-            <img src={footer1} alt="Logo 2" className="h-12 w-auto" />
             <img src={footer2} alt="Logo 3" className="h-12 w-auto" />
             <img src={footer3} alt="Logo 4" className="h-12 w-auto" />
             <img src={footer4} alt="Logo 5" className="h-12 w-auto" />
             <img src={footer5} alt="Logo 6" className="h-12 w-auto" />
+            <img src={footer6} alt="Logo 6" className="h-12 w-auto" />
         </div>
 
         {/* Dividing Line */}

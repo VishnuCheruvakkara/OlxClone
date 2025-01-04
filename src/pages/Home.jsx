@@ -19,8 +19,7 @@ function Home() {
                 <ProductCard />
 
                 {/* Footer */}
-                <Footer /
-                >
+                <Footer />
 
 
             </body>
