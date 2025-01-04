@@ -11,7 +11,8 @@ function LoginModal() {
 
     const googleSignIn = async () => {
         try {
-            await signInWithPopup(auth,googleProvider)
+            await signInWithPopup(auth, googleProvider)
+            setCloseModal(false)
         }
         catch (error){
             console.log(error)

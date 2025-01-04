@@ -1,0 +1,20 @@
+
+  /* Styling for individual paths */
+  svg .background {
+    fill: #ffff;/* Light Gray */
+  }
+  
+  svg .bottom-curve {
+    fill: #ffce32; /* Medium Gray */
+  }
+  
+  svg .top-curve {
+    fill: #23e5db; /* Lighter Gray */
+  }
+  
+  svg .decorative {
+    fill:#3a77ff ; /* Darker Gray */
+  }
+  
+ 
+  

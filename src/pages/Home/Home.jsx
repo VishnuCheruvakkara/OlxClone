@@ -4,9 +4,9 @@ import './Home.css'
 
 
 
-import NavBar from "../components/nav-bar/NavBar";
-import ProductCard from "../components/product -cards/ProductCard";
-import Footer from "../components/footer/Footer";
+import NavBar from "../../components/nav-bar/NavBar";
+import ProductCard from "../../components/product -cards/ProductCard";
+import Footer from "../../components/footer/Footer";
 
 function Home() {
     return (
