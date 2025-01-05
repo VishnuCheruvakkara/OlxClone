@@ -7,11 +7,12 @@ import footer5 from '../../assets/footer_images/cartrade-footer-5.svg'
 import footer6 from '../../assets/footer_images/mobility-footer-6.svg'
 
 
-function Footer() {
+function Footer({hideFirstFooter}) {
     return (
         <div>
-            <footer className="mt-12 w-full">
+            <footer className=" w-full">
                 {/* FooterContent */}
+                {hideFirstFooter ?<></> :
                 <div className="w-full bg-custom-light text-custom-green">
                     <div className="max-w-7xl mx-auto px-4 py-12">
                         <div className="grid grid-cols-1 sm:grid-cols-4 gap-8">
@@ -58,6 +59,10 @@ function Footer() {
                         </div>
                     </div>
                 </div>
+                }
+
+
+
                 {/* FooterBottom */}
                 <div className="w-full bg-custom-green">
     <div className="max-w-7xl mx-auto px-4 py-12">
