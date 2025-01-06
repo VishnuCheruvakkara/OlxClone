@@ -4,10 +4,17 @@ import LoginModal from '../login-modal/LoginModal';
 import './Navbar.css'
 import { auth } from '../../firebase/FireBase';
 import { Link } from "react-router-dom"
+import { toast } from 'react-toastify';
 
-function NavBar() {
+function NavBar({ onSearchChange }) {
     const [isLoggedIn, setIsLoggedIn] = useState(false)
     const [loginModal, setLoginModal] = useState(false);
+    const [searchQuery, setSearchQuery] = useState('');
+
+    const handleSearchSubmit = (event) => {
+        event.preventDefault();
+        onSearchChange(searchQuery)
+    }
 
     useEffect(() => {
         const checkStatus = auth.onAuthStateChanged((user) => {
@@ -24,9 +31,11 @@ function NavBar() {
     const handleLogout = () => {
         auth.signOut().then(() => {
             setIsLoggedIn(false);
+            toast.success("Logged out successfully!"); 
         })
             .catch((error) => {
                 console.error("Error signing out : ", error)
+                toast.error("Error logging out. Please try again.");
             })
 
     }
@@ -38,11 +47,11 @@ function NavBar() {
                     {/* TopBar */}
                     <div className="flex items-center justify-between p-2 md:px-4">
                         <Link to="/">
-                        <div className="flex items-center space-x-4">
-                            <svg width="46px" height="46px" viewBox="0 0 1024 1024" data-aut-id="icon" fill-rule="evenodd" className="h-12 fill-custom-green">
-                                <path className="rui-w4DG7" d="M661.333 256v512h-128v-512h128zM277.333 298.667c117.824 0 213.333 95.531 213.333 213.333s-95.509 213.333-213.333 213.333c-117.824 0-213.333-95.531-213.333-213.333s95.509-213.333 213.333-213.333zM794.496 384l37.504 37.504 37.504-37.504h90.496v90.496l-37.504 37.504 37.504 37.504v90.496h-90.496l-37.504-37.504-37.504 37.504h-90.496v-90.496l37.504-37.504-37.504-37.504v-90.496h90.496zM277.333 426.667c-47.061 0-85.333 38.293-85.333 85.333s38.272 85.333 85.333 85.333c47.061 0 85.333-38.293 85.333-85.333s-38.272-85.333-85.333-85.333z"></path>
-                            </svg>
-                        </div>
+                            <div className="flex items-center space-x-4">
+                                <svg width="46px" height="46px" viewBox="0 0 1024 1024" data-aut-id="icon" fill-rule="evenodd" className="h-12 fill-custom-green">
+                                    <path className="rui-w4DG7" d="M661.333 256v512h-128v-512h128zM277.333 298.667c117.824 0 213.333 95.531 213.333 213.333s-95.509 213.333-213.333 213.333c-117.824 0-213.333-95.531-213.333-213.333s95.509-213.333 213.333-213.333zM794.496 384l37.504 37.504 37.504-37.504h90.496v90.496l-37.504 37.504 37.504 37.504v90.496h-90.496l-37.504-37.504-37.504 37.504h-90.496v-90.496l37.504-37.504-37.504-37.504v-90.496h90.496zM277.333 426.667c-47.061 0-85.333 38.293-85.333 85.333s38.272 85.333 85.333 85.333c47.061 0 85.333-38.293 85.333-85.333s-38.272-85.333-85.333-85.333z"></path>
+                                </svg>
+                            </div>
                         </Link>
 
                         <div className="hidden md:flex flex-1 mx-8 space-x-2">
@@ -55,15 +64,19 @@ function NavBar() {
                                 <i className="fas fa-search absolute left-2 top-3 text-gray-400" />
                                 <i className="fas fa-chevron-down absolute right-2 top-3 text-gray-400" />
                             </div>
-                            <div className="relative flex flex-1">
-                                <input
-                                    type="text"
-                                    placeholder="Find Cars, Mobile Phones and more..."
-                                    className="w-full pl-4 pr-12 py-2 border-2 rounded-l-sm focus:outline-none focus:border-green-400 border-custom-green"
-                                />
-                                <button className="bg-custom-green text-white px-4 rounded-r hover:bg-gray-800">
-                                    <FaSearch />
-                                </button>
+                            <div className="flex-1">
+                                <form action="" onSubmit={handleSearchSubmit} className="relative flex flex-1">
+                                    <input
+                                        type="text"
+                                        value={searchQuery}
+                                        placeholder="Find Cars, Mobile Phones and more..."
+                                        onChange={(event) => setSearchQuery(event.target.value)}
+                                        className="w-full pl-4 pr-12 py-2 border-2 rounded-l-sm focus:outline-none focus:border-green-400 border-custom-green"
+                                    />
+                                    <button type="submit" className="bg-custom-green text-white px-4 rounded-r hover:bg-gray-800">
+                                        <FaSearch />
+                                    </button>
+                                </form>
                             </div>
                         </div>
 
@@ -75,9 +88,9 @@ function NavBar() {
                         <div className="flex items-center space-x-4" >
                             {isLoggedIn ?
                                 <Link to="/">
-                                <button onClick={handleLogout} className=" underline md:block text-md font-bold hover:text-green-400 transition duration-200 ease-in-out">
-                                    Logout
-                                </button>
+                                    <button onClick={handleLogout} className=" underline md:block text-md font-bold hover:text-green-400 transition duration-200 ease-in-out">
+                                        Logout
+                                    </button>
                                 </Link>
                                 :
                                 <button onClick={() => setLoginModal(!loginModal)} className=" underline md:block text-md font-bold hover:text-green-400 transition duration-200 ease-in-out">
@@ -139,17 +152,25 @@ function NavBar() {
                 </div>
             </nav>
 
-            {/* MobileSearch */}
-            <div className="md:hidden p-4 bg-white border-b">
-                <div className="relative">
-                    <input
-                        type="text"
-                        placeholder="Find Cars, Mobile Phones and more..."
-                        className="w-full pl-8 pr-12 py-2 border-2 rounded-sm focus:outline-none focus:border-green-400 border-custom-green"
-                    />
-                    <FaSearch className="absolute right-4 top-1/2 transform -translate-y-1/2 text-gray-600" />
-                </div>
 
+
+            {/* MobileSearch */}
+
+            <div >
+                <form action="" onSubmit={handleSearchSubmit} className="md:hidden p-4 bg-white border-b">
+                    <div className="relative">
+                        <input
+                            type="text"
+                            value={searchQuery}
+                            placeholder="Find Cars, Mobile Phones and more..."
+                            onChange={(event) => setSearchQuery(event.target.value)}
+                            className="w-full pl-8 pr-12 py-2 border-2 rounded-sm focus:outline-none focus:border-green-400 border-custom-green"
+                        />
+                        <button type='submit' className="cursor-pointer">
+                            <FaSearch className="absolute right-4 top-1/2 transform -translate-y-1/2 text-gray-600" />
+                        </button>
+                    </div>
+                </form>
             </div>
 
             {loginModal && <LoginModal />}

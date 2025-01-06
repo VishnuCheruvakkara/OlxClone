@@ -4,7 +4,8 @@ import { RxCross2 } from "react-icons/rx";
 import { RiSmartphoneLine } from "react-icons/ri";
 import { FcGoogle } from "react-icons/fc";
 import { signInWithPopup } from 'firebase/auth';
-import { auth,googleProvider } from '../../firebase/FireBase';
+import { auth, googleProvider } from '../../firebase/FireBase';
+import { toast } from 'react-toastify';
 
 function LoginModal() {
     const [closeModal, setCloseModal] = useState(true)
@@ -13,13 +14,16 @@ function LoginModal() {
         try {
             await signInWithPopup(auth, googleProvider)
             setCloseModal(false)
+            // Show a success message with toast
+            toast.success("You are logged in successfully!")
         }
-        catch (error){
+        catch (error) {
             console.log(error)
+            toast.error("Login failed. Please try again.");
         }
     }
     return (
-        
+
         <>
             {closeModal &&
                 <div class="relative z-10" aria-labelledby="modal-title" role="dialog" aria-modal="true">
@@ -52,7 +56,7 @@ function LoginModal() {
                                                     <h1 class="font-semibold ml-3">Continue with phone</h1>
                                                 </div>
 
-                                                <div onClick={ googleSignIn }class="flex border border-gray-300 p-2 rounded-sm mt-4 cursor-pointer w-72 mx-auto hover:bg-blue-100 transition duration-200 ease-in-out hover:border-blue-500">
+                                                <div onClick={googleSignIn} class="flex border border-gray-300 p-2 rounded-sm mt-4 cursor-pointer w-72 mx-auto hover:bg-blue-100 transition duration-200 ease-in-out hover:border-blue-500">
                                                     <FcGoogle className="text-2xl" />
                                                     <h1 class="font-semibold ml-12">Continue with Google</h1>
                                                 </div>

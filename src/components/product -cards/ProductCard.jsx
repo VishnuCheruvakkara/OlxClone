@@ -4,8 +4,10 @@ import { db } from '../../firebase/FireBase';
 import { collection, getDocs } from 'firebase/firestore';
 import { Link } from 'react-router-dom';
 import { RotatingLines } from 'react-loader-spinner';
+import notFound from '../../assets/no-result.gif'
 
-function ProductCard() {
+function ProductCard({ searchQuery }) {
+    console.log(searchQuery)
     const [products, setProducts] = useState([]);
     const [loading, setLoading] = useState(true); // State to track loading status
 
@@ -46,6 +48,15 @@ function ProductCard() {
             </div>
         );
     }
+    // filter product logic 
+    // Filter product logic
+    const filterProducts = searchQuery
+        ? products.filter((product) =>
+        (product.title?.toLowerCase().includes(searchQuery.toLowerCase()) ||
+            product.condition?.toLowerCase().includes(searchQuery.toLowerCase()) ||
+            product.location?.toLowerCase().includes(searchQuery.toLowerCase()))
+        )
+        : products;
 
     return (
         <>
@@ -54,44 +65,58 @@ function ProductCard() {
                 <h2 className="text-2xl font-bold mb-6">Fresh recommendations</h2>
 
                 {/* ProductGrid */}
+
                 <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
-                    {/* Map over products */}
-                    {products.map((product) => (
-                        <Link to={`/product-details/${product.id}`} key={product.id}>
-                        <div
-                            
-                            key={product.id}
-                            className="bg-white rounded-lg shadow hover:shadow-lg transition-shadow cursor-pointer"
-                        >
-                            <div className="relative">
-                                <img
-                                    src={product.images && product.images[0]} // Use the first image URL
-                                    alt={product.title}
-                                    className="w-full h-48 object-cover rounded-t-lg"
-                                />
-                                <button className="absolute top-2 right-2 bg-white p-2 rounded-full shadow hover:shadow-md group">
-                                    <FaRegHeart className="text-md group-hover:text-green-500 transition duration-200 ease-out" />
-                                </button>
-                               
-                                    <div className="absolute bottom-2 left-2 bg-yellow-400 text-xs px-2 py-1 rounded">
-                                        FEATURED
+                    {/* Conditional rendering */}
+                    {filterProducts.length > 0 ? (
+                        filterProducts.map((product) => (
+                            <Link to={`/product-details/${product.id}`} key={product.id}>
+                                <div
+                                    key={product.id}
+                                    className="bg-white rounded-lg shadow hover:shadow-lg transition-shadow cursor-pointer"
+                                >
+                                    <div className="relative">
+                                        <img
+                                            src={product.images && product.images[0]} // Use the first image URL
+                                            alt={product.title}
+                                            className="w-full h-48 object-cover rounded-t-lg"
+                                        />
+                                        <button className="absolute top-2 right-2 bg-white p-2 rounded-full shadow hover:shadow-md group">
+                                            <FaRegHeart className="text-md group-hover:text-green-500 transition duration-200 ease-out" />
+                                        </button>
+
+                                        <div className="absolute bottom-2 left-2 bg-yellow-400 text-xs px-2 py-1 rounded">
+                                            FEATURED
+                                        </div>
                                     </div>
-                                
-                            </div>
-                            <div className="p-4">
-                                <div className="font-bold text-xl">₹ {product.price}</div>
-                                <p className="text-gray-600 text-sm mt-1">{product.condition}</p>
-                                <p className="mt-1">{product.title}</p>
-                                <div className="flex items-center justify-between mt-2 text-gray-500 text-xs">
-                                    <span>{product.location}</span>
-                                    <span>TODAY</span> {/* Adjust date if needed */}
+                                    <div className="p-4">
+                                        <div className="font-bold text-xl">₹ {product.price}</div>
+                                        <p className="text-gray-600 text-sm mt-1">{product.condition}</p>
+                                        <p className="mt-1">{product.title}</p>
+                                        <div className="flex items-center justify-between mt-2 text-gray-500 text-xs">
+                                            <span>{product.location}</span>
+                                            <span>
+                                                {product.createdAt ?
+                                                    product.createdAt.toDate().toLocaleDateString('en-GB') : 'Loading...'}
+                                            </span>
+                                        </div>
+                                    </div>
                                 </div>
+                            </Link>
+                        ))
+                    ) : (
+                        // Display "Nothing Found" when no products match
+                        <div className="col-span-4 bg-gray-100 text-gray-600 text-center py-8 rounded shadow-md">
+                            <h3 className="text-lg font-semibold">Nothing Found</h3>
+                            <div className="flex justify-center ">
+                                {/* Image placed below the text */}
+                                <img src={notFound} alt="Nothing Found" className="w-32 h-32 object-cover mt-4" />
                             </div>
                         </div>
-                        </Link>
-                        
-                    ))}
+
+                    )}
                 </div>
+
 
                 {/* LoadMore */}
                 <div className="text-center mt-8">

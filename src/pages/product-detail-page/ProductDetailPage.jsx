@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import NavBar from '../../components/nav-bar/NavBar';
 import Footer from '../../components/footer/Footer';
-import { useParams,Link } from 'react-router-dom';
+import { useParams, Link } from 'react-router-dom';
 import { db } from '../../firebase/FireBase';
 import { doc, getDoc } from 'firebase/firestore';
 import PersonImage from '../../assets/loginModal/person-olx.png'
@@ -35,16 +35,16 @@ function ProductDetailPage() {
     // Check if product is loaded, and show loading or fallback content
     if (!product) {
         return (
-            <div className=" [&_svg]:!stroke-[#002f34] flex justify-center items-center h-screen w-screen fixed top-0 left-0 bg-white bg-opacity-70">
-              <RotatingLines
+            <div className="flex justify-center items-center h-screen w-screen fixed top-0 left-0 bg-transparent">
+                <RotatingLines
                     visible={true}
                     height="96"
                     width="96"
-                    color="#"
+                    strokeColor="#002f34"
                     strokeWidth="2"
                     animationDuration="0.75"
                     ariaLabel="rotating-lines-loading"
-                    wrapperStyle={{ }}
+                    wrapperStyle={{}}
                     wrapperClass=""
                 />
             </div>
@@ -143,7 +143,10 @@ function ProductDetailPage() {
                                 <div>
                                     <h2 className="text-xl font-normal mb-2">{product.title}</h2>
                                     <p className="text-gray-500 text-sm">{product.location}</p>
-                                    <p className="text-gray-500 text-sm mt-1">Today</p>
+                                    <p className="text-gray-500 text-sm mt-1"><span>
+                                        {product.createdAt ?
+                                            product.createdAt.toDate().toLocaleDateString('en-GB') : 'Loading...'}
+                                    </span></p>
                                 </div>
 
                                 {/* Seller information card */}
