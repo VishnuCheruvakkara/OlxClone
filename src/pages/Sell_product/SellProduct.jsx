@@ -1,13 +1,15 @@
-import React, { useState,useEffect } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { IoArrowBackSharp } from "react-icons/io5";
 import Footer from '../../components/footer/Footer';
 import { db, auth } from '../../firebase/FireBase';
 import { collection, addDoc, serverTimestamp } from 'firebase/firestore';
+import axios from "axios"
 
 const PostAdForm = () => {
     const [user, setUser] = useState(null);
-    const [selectedImages, setSelectedImages] = useState([]);
+    const [selectedFiles, setSelectedFiles] = useState([]);// Files selected by the user
+    const [selectedImages, setSelectedImages] = useState([]); // URLs of uploaded images
     const [productDetails, setProductDetails] = useState({
         title: '',
         description: '',
@@ -19,11 +21,11 @@ const PostAdForm = () => {
     })
     //Check the state of user | user was authenticated or not 
     useEffect(() => {
-    const unsubscribe = auth.onAuthStateChanged((user) => {
-        setUser(user || null);
-    });
-    return () => unsubscribe(); // Clean up the listener on unmount
-}, []);
+        const unsubscribe = auth.onAuthStateChanged((user) => {
+            setUser(user || null);
+        });
+        return () => unsubscribe(); // Clean up the listener on unmount
+    }, []);
 
 
     //Handle the input that enterd by the user 
@@ -33,53 +35,85 @@ const PostAdForm = () => {
             ...prevDetails, [name]: value,
         }))
     }
-
-    //Save product details in the firebase 
-    const handleSubmit = async (event) => {
-        event.preventDefault();
-        if (user) {
-            try {
-                await addDoc(collection(db, 'products'), {
-                    userId: user.uid,
-                    title: productDetails.title,
-                    description: productDetails.description,
-                    category: productDetails.category,
-                    condition: productDetails.condition,
-                    price: productDetails.price,
-                    location: productDetails.location,
-                    phonenumber: productDetails.phonenumber,
-                    createdAt: serverTimestamp(),
-                })
-                setProductDetails({
-                    title: '',
-                    description: '',
-                    category: '',
-                    condition: '',
-                    price: '',
-                    location: '',
-                    phonenumber: '',
-                })
-                alert('Product added successfully!')
-            }
-            catch (error) {
-                console.error("Error adding product:", error)
-                alert("Error adding product.Please try again.")
-            }
-        }
-        else {
-            alert("Please login to post a product.")
-        }
-    }
-
     // Handle image selection
-    const handleImageSelect = (e, index) => {
+    const handleFileSelect = (e, index) => {
         const file = e.target.files[0];
         if (file) {
+            const newFiles = [...selectedFiles];
+            newFiles[index] = file;
+            setSelectedFiles(newFiles);
+    
             const newImages = [...selectedImages];
-            newImages[index] = URL.createObjectURL(file); // Use Object URL to display image preview
+            newImages[index] = URL.createObjectURL(file); // Create a preview URL
             setSelectedImages(newImages);
         }
     };
+    
+
+    //upload image to cloudinary
+    const uploadToCloudinary = async (file) => {
+        const formData = new FormData();
+        formData.append("file", file);
+        formData.append("upload_preset", "OlxProducts")
+        formData.append("cloud_name", "dcukpkdvr");
+        try {
+            const response = await axios.post(
+                "https://api.cloudinary.com/v1_1/dcukpkdvr/image/upload",
+                formData
+            );
+            return response.data.secure_url;
+        } catch (error) {
+            console.error("Cloudinary Upload console.error!", error);
+            throw error;
+        }
+    }
+
+    //Handle form submission 
+    const handleSubmit = async (event) => {
+        event.preventDefault();
+        if (!user) {
+            alert("Please login to post a product!")
+            return;
+        }
+        try {
+            const uploadedUrls = await Promise.all(
+                selectedFiles.map((file) => uploadToCloudinary(file))
+            );
+            // Save the product details along with image URLs to Firebase
+            await addDoc(collection(db, "products"), {
+                userId: user.uid,
+                title: productDetails.title,
+                description: productDetails.description,
+                category: productDetails.category,
+                condition: productDetails.condition,
+                price: productDetails.price,
+                location: productDetails.location,
+                phonenumber: productDetails.phonenumber,
+                images: uploadedUrls, // Cloudinary URLs
+                createdAt: serverTimestamp(),
+            })
+            // Reset form and state
+            setProductDetails({
+                title: "",
+                description: "",
+                category: "",
+                condition: "",
+                price: "",
+                location: "",
+                phonenumber: "",
+            });
+            setSelectedFiles([]);
+            setSelectedImages([]);
+            alert("Product added successfully")
+        }
+        catch (error) {
+            console.error("Error adding product : ", error)
+            alert("Error adding product.Please try again")
+        }
+    }
+
+
+
 
 
     return (
@@ -178,16 +212,21 @@ const PostAdForm = () => {
                     {/* Upload Photos */}
                     <div className="bg-white rounded-lg shadow-sm p-4 mb-4">
                         <h2 className="text-lg font-semibold text-gray-800 mb-4">UPLOAD UP TO 20 PHOTOS</h2>
+
                         <div className="grid grid-cols-4 gap-4">
                             {[...Array(20)].map((_, index) => (
                                 <div
                                     key={index}
                                     className="aspect-square border-2 border-dashed border-gray-300 rounded-lg flex items-center justify-center cursor-pointer hover:border-gray-400 relative"
                                 >
-                                    {/* If image is selected, show it, otherwise show default icon */}
+                                    {/* Show preview or default icon */}
                                     {selectedImages[index] ? (
                                         <img
-                                            src={selectedImages[index]}
+                                            src={
+                                                typeof selectedImages[index] === "string"
+                                                    ? selectedImages[index]
+                                                    : URL.createObjectURL(selectedImages[index]) // Preview file
+                                            }
                                             alt={`selected-${index}`}
                                             className="w-full h-full object-cover rounded-lg"
                                         />
@@ -199,12 +238,14 @@ const PostAdForm = () => {
                                     <input
                                         type="file"
                                         accept="image/*"
-                                        onChange={(e) => handleImageSelect(e, index)}
+                                        onChange={(e) => handleFileSelect(e, index)}
                                         className="absolute inset-0 opacity-0 cursor-pointer"
                                     />
                                 </div>
                             ))}
                         </div>
+
+
                         <div className="text-red-500 text-sm mt-2">This field is mandatory. Add atleast one image...</div>
                     </div>
 
