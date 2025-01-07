@@ -54,7 +54,9 @@ function ProductCard({ searchQuery }) {
         ? products.filter((product) =>
         (product.title?.toLowerCase().includes(searchQuery.toLowerCase()) ||
             product.condition?.toLowerCase().includes(searchQuery.toLowerCase()) ||
-            product.location?.toLowerCase().includes(searchQuery.toLowerCase()))
+            product.location?.toLowerCase().includes(searchQuery.toLowerCase()) ||
+            product.category?.toLowerCase().includes(searchQuery.toLowerCase()) 
+        )
         )
         : products;
 
