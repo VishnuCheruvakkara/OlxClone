@@ -1,4 +1,4 @@
-# OLX Clone
+# OLX Clone (React+vite+TailWind+FireBase)
 
 An OLX clone application built with **React (Vite)** for the frontend and **Firebase** for the backend, enabling users to log in with Google authentication and authenticated users to list products for sale.Used **tail-wind** for design part.
 
