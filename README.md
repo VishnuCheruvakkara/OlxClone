@@ -1,6 +1,6 @@
 # OLX Clone
 
-An OLX clone application built with **React (Vite)** for the frontend and **Firebase** for the backend, enabling users to log in with Google authentication and authenticated users to list products for sale.
+An OLX clone application built with **React (Vite)** for the frontend and **Firebase** for the backend, enabling users to log in with Google authentication and authenticated users to list products for sale.Used **tail-wind** for design part.
 
 ### Video Demo of Olxclone
 [Watch the video demo here](https://www.linkedin.com/posts/vishnu-cheruvakkara-231b8b235_reactjs-contextapi-webdevelopment-activity-7283701684474716160-r_nS?utm_source=share&utm_medium=member_desktop)
