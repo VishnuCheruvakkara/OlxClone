@@ -10,11 +10,11 @@ An OLX clone application built with **React (Vite)** for the frontend and **Fire
 </p>
 
 <p align="center">
-  <a href="https://agriflow.space" target="_blank">
-    <img alt="View Live Project" src="https://img.shields.io/badge/%20Live%20Demo-00C853?style=for-the-badge&logo=vercel&logoColor=white" />
+  <a href="https://olx-clone-ten.vercel.app/" target="_blank">
+    <img alt="View Live Project" src="https://img.shields.io/badge/%20Live%20Demo-002f34?style=for-the-badge&logo=vercel&logoColor=white" />
   </a>
   &nbsp;
-  <a href="https://www.youtube.com/watch?v=YOUR_VIDEO_ID" target="_blank">
+  <a href="https://youtu.be/Ws2stnXQQvU" target="_blank">
     <img alt="Watch Demo Video" src="https://img.shields.io/badge/%20Demo%20Video-FF0000?style=for-the-badge&logo=youtube&logoColor=white" />
   </a>
 </p>
