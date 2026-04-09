@@ -35,3 +35,16 @@ An OLX clone application built with **React (Vite)** for the frontend and **Fire
 - **Modern Frontend**: Built using React with Vite for fast development and performance.
 
 ---
+
+## Installation
+
+Fork this repo on GitHub, then clone your fork and run locally:
+
+```bash
+git clone https://github.com/your-username/olx-clone.git
+cd olx-clone
+npm install
+npm run dev
+```
+
+The app will be running at **http://localhost:5173**
