@@ -17,6 +17,10 @@ An OLX clone application built with **React (Vite)** for the frontend and **Fire
   <a href="https://youtu.be/Ws2stnXQQvU" target="_blank">
     <img alt="Watch Demo Video" src="https://img.shields.io/badge/%20Demo%20Video-FF0000?style=for-the-badge&logo=youtube&logoColor=white" />
   </a>
+   &nbsp;
+   <a href="https://www.linkedin.com/posts/vishnu-cheruvakkara-231b8b235_reactjs-contextapi-webdevelopment-activity-7283701684474716160-r_nS?utm_source=share&utm_medium=member_desktop" target="_blank">
+    <img alt="Connect on LinkedIn" src="https://img.shields.io/badge/LinkedIn-0A66C2?style=for-the-badge&logo=logmein&logoColor=white" />
+  </a>
 </p>
 
 
