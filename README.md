@@ -6,7 +6,7 @@ An OLX clone application built with **React (Vite)** for the frontend and **Fire
 [Watch the video demo here](https://www.linkedin.com/posts/vishnu-cheruvakkara-231b8b235_reactjs-contextapi-webdevelopment-activity-7283701684474716160-r_nS?utm_source=share&utm_medium=member_desktop)
 
 <p align="center">
-  <img src="./assets/agri_flow_landing_page.jpg" alt="AgriFlow Logo" width="100%" style="border-radius: 16px;" />
+  <img src="./assets/OlxHome.jpg" alt="AgriFlow Logo" width="100%" style="border-radius: 16px;" />
 </p>
 
 <p align="center">
