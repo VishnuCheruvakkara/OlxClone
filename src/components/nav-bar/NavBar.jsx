@@ -1,7 +1,8 @@
+
 import React, { useState, useEffect } from 'react'
 import { FaSearch } from "react-icons/fa"
 import LoginModal from '../login-modal/LoginModal';
-import './Navbar.css'
+import './NavBar.css'
 import { auth } from '../../firebase/FireBase';
 import { Link } from "react-router-dom"
 import { toast } from 'react-toastify';
