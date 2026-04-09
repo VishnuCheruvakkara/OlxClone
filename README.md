@@ -4,7 +4,7 @@ An OLX clone application built with **React (Vite)** for the frontend and **Fire
 
 
 <p align="center">
-  <img src="./assets/OlxHome.jpg" alt="AgriFlow Logo" width="100%" style="border-radius: 16px;" />
+  <img src="./assets/OlxHome.jpg" alt="Olx clone" width="100%" style="border-radius: 16px;" />
 </p>
 
 <p align="center">
