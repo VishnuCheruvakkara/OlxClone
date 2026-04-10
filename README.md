@@ -12,7 +12,7 @@ An OLX clone application built with **React (Vite)** for the frontend and **Fire
     <img alt="View Live Project" src="https://img.shields.io/badge/%20Live%20Demo-002f34?style=for-the-badge&logo=vercel&logoColor=white" />
   </a>
   &nbsp;
-  <a href="https://youtu.be/cjnsblTDRB0" target="_blank">
+  <a href="https://youtu.be/HXiz7pE85M8" target="_blank">
     <img alt="Watch Demo Video" src="https://img.shields.io/badge/%20Demo%20Video-FF0000?style=for-the-badge&logo=youtube&logoColor=white" />
   </a>
    &nbsp;
